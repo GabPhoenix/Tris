@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="./static/css/signin.css">
+
+    <!-- javascript -->
+    <script src="./static/js/index.js" defer></script>
+
+    <!-- Title -->
+    <title>Sign in</title>
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=League+Spartan:wght@100;200;300&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400&family=Ubuntu:wght@300&display=swap" rel="stylesheet"> 
+
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/e534328d53.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Post Messages 400/200 -->
+    <div class="message"></div>
+    <main>
+        <!-- Main container -->
+        <div class="container">
+            <img src="./static/img/tris-logo.png" alt="Tris - Hospitalar Triage">
+            <h1>Sign in</h1>
+            <!-- FORM -->
+            <form action="">
+                <input type="text" name="username" id="username" placeholder="Username" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" name="password" id="user_password" placeholder="Password" required>
+                <input type="password" name="password" id="user_password" placeholder="Inform the password again" required>
+                <select name="group" id="group" required>
+                    <option value="default"></option>
+                    <option value="doctor">doctor</option>
+                    <option value="nurse">nurse</option>
+                    <option value="employee">employee</option>
+                    <option value="patient">patient</option>
+                </select>
+                <input type="submit" value="Sign in" id="signin">
+                <a href="./login.html">Already have an account? Login!</a>
+            </form>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="about" id="about" onclick="indexPageRedirect();">
+        <div class="logo-div">
+            <div class="logo-img">
+                <img src="./static/img/tris-logo.png" alt="Tris Hospitalar Triage - Logo">
+            </div>
+            <div class="logo-text">
+                <h1>Tris</h1>
+            </div>
+        </div>
+        <div class="about-devs">
+            <i class="fa-brands fa-github"></i>
+            <a href="#https://github.com/Clary04">Clarissa Wanderley</a>
+            <a href="#https://github.com/GabPhoenix">Gabriel Carvalho</a>
+            <p>all rights reserved <span>&reg;</span></p>
+        </div>
+
+    </footer>
+    <!-- end footer section -->
+</body>
+</html>
