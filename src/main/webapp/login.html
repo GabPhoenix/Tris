@@ -9,6 +9,7 @@
 
     <!-- javascript -->
     <script src="./static/js/index.js" defer></script>
+    <script src="./static/js/loginValidation.js" defer></script>
 
     <!-- Title -->
     <title>Login</title>
@@ -23,16 +24,25 @@
 </head>
 <body>
     <!-- Post Messages 200 -->
-    <div class="message"></div>
+    <div class="message">
+        <div class="message-container">
+            <div class="text"></div>
+            <div class="button">
+                <button onclick="closeBtn();">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+        </div>
+    </div>
     <main>
         <!-- Main container -->
         <div class="container">
             <img src="./static/img/tris-logo.png" alt="Tris - Hospitalar Triage">
             <h1>Login</h1>
             <!-- FORM -->
-            <form action="">
+            <form action="LoginController" method="post" name="loginForm">
                 <input type="text" name="username" id="username" placeholder="Username" required>
-                <input type="password" name="password" id="user_password" placeholder="Password" required>
+                <input type="password" name="password" id="user_password" placeholder="Password" minlength="4" required>
                 <input type="submit" value="Login" id="login">
                 <a href="./signin.html">Don't have an account? Sign in!</a>
             </form>
