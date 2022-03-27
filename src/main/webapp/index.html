@@ -6,9 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
 
+    <!-- page icon -->
+    <link rel="icon" type="image/png" href="./static/img/tris-logo-blue.png">
+
     <!-- link css  -->
     <link rel="stylesheet" href="./static/css/style.css">
     
+    <!-- javascript -->
+    <script src="./static/js/index.js" defer></script>
+    <script src="./static/js/responsiveMenu.js" defer></script>
+
     <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +27,7 @@
 <body>
     <!-- start header section  -->
     <header class="header" id="header">
+        <div class="menu_section">
         <div class="logo-div">
             <div class="logo-img">
                 <img src="./static/img/tris-logo.png" alt="Tris Hospitalar Triage - Logo">
@@ -36,6 +44,15 @@
                 <li><a href="#about">About</a></li>
             </ul>
         </nav>
+        <div class="menu_buttons">
+            <div class="menu_toggle">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <div class="menu_close">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+        </div>
+        </div>
     </header>
     <!-- end header section   -->
 
@@ -135,8 +152,8 @@
         </div>
         <div class="about-devs">
             <i class="fa-brands fa-github"></i>
-            <a href="#https://github.com/Clary04">Clarissa Wanderley</a>
-            <a href="#https://github.com/GabPhoenix">Gabriel Carvalho</a>
+            <a href="https://github.com/Clary04">Clarissa Wanderley</a>
+            <a href="https://github.com/GabPhoenix">Gabriel Carvalho</a>
             <p>all rights reserved <span>&reg;</span></p>
         </div>
 
@@ -152,8 +169,5 @@
             <button class="acpt_cookies">Accept</button>
         </div>
     </div>
-    
-    <!-- javascript -->
-    <script src="./static/js/index.js"></script>
 </body>
 </html>

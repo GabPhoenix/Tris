@@ -35,6 +35,11 @@ lu{
 .header{
     width: 100vw;
     max-height: 70px;
+    position: fixed;
+    z-index: 2;
+}
+
+.header .menu_section{
     padding: .5rem;
     display: flex;
     flex-direction: row;
@@ -44,7 +49,6 @@ lu{
     position: sticky;
     top: 0;
     background-color: var(--black);
-    z-index: 2;
 }
 
 .header .logo-div{
@@ -92,6 +96,17 @@ lu{
 .header .navbar ul li a:hover{
     color: var(--light-blue);
     border-bottom: 2px solid var(--white);
+}
+
+.header .menu_buttons{
+    font-size: 2rem;
+    color: var(--white);
+    cursor: pointer;
+    display: none;
+}
+
+.header .menu_buttons .menu_close{
+    display: none;
 }
 
 .home{
@@ -441,7 +456,7 @@ lu{
     }
 
     .why .why-title{
-        margin-top: -8rem;
+        margin-top: -2rem;
     }
 
     .about{
@@ -449,6 +464,65 @@ lu{
     }
 }
 
+@media (max-width: 700px){
+    .header .navbar{
+        display: none;
+    }
+    .header .menu_buttons{
+        display: block;
+    }
+
+    /* allow fullscrenn */
+    .header .menu_section.on{
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: var(--black);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .header .menu_section.on .logo-div{
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 1rem 3rem;
+    }
+
+    .header .menu_section.on .navbar{
+        display: block;
+        position: absolute;
+    }
+    .header .menu_section.on .menu_toggle{
+        display: none;
+    }
+
+    .header .menu_section.on .menu_close{
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 15px;
+        padding: 1rem 3rem;
+    }
+
+    .header .menu_section.on .navbar ul{
+        display: block;
+        text-align: center;
+    }
+
+    .header .menu_section.on .navbar ul li a{
+        font-size: 2rem;
+        line-height: 2.5rem;
+    }
+
+    .header .menu_section.on .navbar ul li a:hover{
+        border: none;
+    }
+}
 
 @media (max-width: 615px){
     .home{
@@ -457,6 +531,7 @@ lu{
 
     .why .cards{
         margin-top: 0%;
+        margin-bottom: 10rem;
     }
 
     .why .why-title{

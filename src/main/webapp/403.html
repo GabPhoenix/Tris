@@ -17,10 +17,13 @@
         <h1>
             :(
         </h1>
-        <h2>500 - Server error</h2>
-        <p>It looks impossible connecting with the server. <br>
-        Wait some minutes and try again!
-        </p>
+        <h2>403 - Forbidden</h2>
+        <p>You need to be logged to access this content, login it before!</p>
     </div>
+    <script>
+        setTimeout(function() {
+            window.location.href = "./login.html";
+        }, 8000);
+    </script>
 </body>
 </html>

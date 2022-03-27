@@ -10,6 +10,10 @@ function indexPageRedirect(){
     window.location.href = "./index.html";
 }
 
+function indexAccessRedirect(){
+    window.location.href = "../index.html";
+}
+
 function closeBtn(){
     err == true ? message.classList.toggle("error") : message.classList.toggle("success");
     err == false;

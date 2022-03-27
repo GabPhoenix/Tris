@@ -17,10 +17,13 @@
         <h1>
             :(
         </h1>
-        <h2>500 - Server error</h2>
-        <p>It looks impossible connecting with the server. <br>
-        Wait some minutes and try again!
-        </p>
+        <h2>401 - Unauthorized</h2>
+        <p>You have not permission to access this data!</p>
     </div>
+    <script>
+        setTimeout(function() {
+            window.location.href = "./index.html";
+        }, 8000);
+    </script>
 </body>
 </html>

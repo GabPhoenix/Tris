@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- page icon -->
+    <link rel="icon" type="image/png" href="./static/img/tris-logo-blue.png">
+
     <!-- Link CSS -->
     <link rel="stylesheet" href="./static/css/signin.css">
 
@@ -41,15 +45,14 @@
             <!-- FORM -->
             <form action="Signin" method="post" name="signinForm">
                 <input type="text" name="username" id="username" placeholder="Username" required>
-                <input type="email" name="email" id="email" placeholder="Email" required>
+                <input type="date" name="bdate" id="bdate" placeholder="Birth date" required>
+                <input type="text" name="cpf" id="cpf" placeholder="CPF" required>
                 <input type="password" name="user_password" id="user_password" placeholder="Password" minlength="4" required>
-                <input type="password" name="valid_password" id="valid_password" placeholder="Inform the password again" minlength="4" required>
                 <select name="group" id="group" required>
                     <option value="default"></option>
                     <option value="doctor">doctor</option>
                     <option value="nurse">nurse</option>
-                    <option value="employee">employee</option>
-                    <option value="patient">patient</option>
+                    <option value="attendant">attendant</option>
                 </select>
                 <input type="submit" value="Sign in" id="signin">
                 <a href="./login.html">Already have an account? Login!</a>
@@ -68,8 +71,8 @@
         </div>
         <div class="about-devs">
             <i class="fa-brands fa-github"></i>
-            <a href="#https://github.com/Clary04">Clarissa Wanderley</a>
-            <a href="#https://github.com/GabPhoenix">Gabriel Carvalho</a>
+            <a href="https://github.com/Clary04">Clarissa Wanderley</a>
+            <a href="https://github.com/GabPhoenix">Gabriel Carvalho</a>
             <p>all rights reserved <span>&reg;</span></p>
         </div>
 
