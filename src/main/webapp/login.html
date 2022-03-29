@@ -46,9 +46,12 @@
             <!-- FORM -->
             <form action="Login" method="post" name="loginForm">
                 <input type="text" name="username" id="username" placeholder="Username" required>
-                <input type="text" name="cpf" id="cpf" placeholder="cpf" required>
                 <input type="password" name="password" id="user_password" placeholder="Password" minlength="4" required>
                 <input type="submit" value="Login" id="login">
+                <div class="remember">
+                    <input type="checkbox" name="remenber_login" id="remember_input"> 
+                    <label for="remenber_login">remember login</label>
+                </div>
                 <a href="./signin.html">Don't have an account? Sign in!</a>
             </form>
         </div>
@@ -65,7 +68,7 @@
         </div>
         <div class="about-devs">
             <i class="fa-brands fa-github"></i>
-            <a href="https://github.com/Clary04">Clarissa Wanderley</a>
+            <a href="https://github.com/Clary04">Clarissa Vanderley</a>
             <a href="https://github.com/GabPhoenix">Gabriel Carvalho</a>
             <p>all rights reserved <span>&reg;</span></p>
         </div>

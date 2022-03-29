@@ -17,6 +17,11 @@ btn.addEventListener("click", function(e){
         text.innerHTML = "All files are required!";
         err = true;
         return false;
+    } else if(password.length < 4){
+        err == false ? message.classList.toggle("error") : "";
+        text.innerHTML = "Password must have 4 characters at least!";
+        err = true;
+        return false;
     }
     // success
     else{
