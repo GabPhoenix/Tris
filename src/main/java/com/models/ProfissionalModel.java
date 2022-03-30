@@ -2,13 +2,14 @@ package com.models;
 
 public class ProfissionalModel {
 	private int id;
-	private String login, senha, nome, cpf;
+	private String login, senha, nome, cpf, grupo;
 
-	public ProfissionalModel(String login, String senha, String nome, String cpf) {
+	public ProfissionalModel(String login, String senha, String nome, String cpf, String grupo) {
 		this.login = login;
 		this.senha = senha;
 		this.nome = nome;
 		this.cpf = cpf;
+		this.grupo = grupo;
 	}
 	
 	public ProfissionalModel(){
@@ -55,5 +56,12 @@ public class ProfissionalModel {
 		this.cpf = cpf;
 	}
 	
+	public String getGrupo() {
+		return grupo;
+	}
+	
+	public void setGrupo(String grupo) {
+		this.grupo = grupo;
+	}
 	
 }
