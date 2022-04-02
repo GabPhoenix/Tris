@@ -1,3 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="com.models.PacienteModel" %>
+<% ArrayList<PacienteModel> lista = (ArrayList<PacienteModel>) request.getAttribute("pacientes");%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,9 +32,9 @@
         <!--  pt-br
         JSP
         arquivo para receber a lista de pacientes
-        Na listagem serÃ¡ passado
-        (COR DO QUADRO) Nome - cpf - data de nascimento - sus - quadro de saÃºde -
-        descriÃ§Ã£o do quadro - email  
+        Na listagem será passado
+        (COR DO QUADRO) Nome - cpf - data de nascimento - sus - quadro de saúde -
+        descrição do quadro - email  
         link para editar 
         link para remover 
      -->
@@ -43,7 +49,7 @@
                 <col class="nascimento">
                 <col class="sus">
                 <col class="quadro">
-                <col class="descriÃ§Ã£o">
+                <col class="descrição">
                 <col class="email">
             </colgroup>
             <thead>
@@ -54,27 +60,42 @@
                     <th>data de nascimento</th>
                     <th>SUS</th>
                     <th>Quadro</th>
-                    <th>DescriÃ§Ã£o</th>
+                    <th>Descrição</th>
                     <th>Email</th>
                     <th>Editar</th>
                     <th>Remover</th>
                 </tr>
             </thead>
             <tbody>
+    			<%for(int i=0; i<lista.size(); i++){ %>
                 <tr class="list_of_patients">
-                    <td class="cor_triagem"></td>
-                    <td>Gabriel da Silva Carvalho</td>
-                    <td>00000000000</td>
-                    <td>26/06/2003</td>
-                    <td>123456789</td>
-                    <td class="quadro_triagem">leve</td>
-                    <td>cefleia</td>
-                    <td>gs9@discente.ifpe.edu.br</td>
-                    <td class="editar_triagem"><a href="#">editar</a></td>
-                    <td class="remover_triagem"><a href="#">remover</a></td>
+                    <td class="cor_triagem">
+                    </td>
+                    <td>
+                    <%=lista.get(i).getNome()%>
+                    </td>
+                    <td>
+                    <%=lista.get(i).getCpf()%>
+                    </td>
+                    <td>
+                    <%=lista.get(i).getSus()%>
+                    </td>
+                    <td class="quadro_triagem">
+                    <%=lista.get(i).getQuadro()%>
+                    </td>
+                    <td>
+                    <%=lista.get(i).getDescricao()%>
+                    </td>
+                    <td>
+                    <%=lista.get(i).getEmail()%>
+                    </td>
+                    <td class="editar_triagem"><a href="#?action=update&id=<%=lista.get(i).getId()%>">editar</a></td>
+                    <td class="remover_triagem"><a href="#?action=delete&id=<%=lista.get(i).getId()%>">remover</a></td>
+                <%}%>
                 </tr>
             </tbody>
         </table>
+        <button action="list_patients">Listar pacientes</button>
     </main>
      <!-- Footer -->
    <footer class="about" id="about" onclick="indexAccessRedirect();">
@@ -88,7 +109,7 @@
     </div>
     <div class="about-devs">
         <i class="fa-brands fa-github"></i>
-        <a href="https://github.com/Clary04">Clarissa Wanderley</a>
+        <a href="https://github.com/Clary04">Clarissa Vanderley</a>
         <a href="https://github.com/GabPhoenix">Gabriel Carvalho</a>
         <p>all rights reserved <span>&reg;</span></p>
     </div>

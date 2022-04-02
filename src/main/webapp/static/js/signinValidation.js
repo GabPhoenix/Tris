@@ -30,10 +30,6 @@ btn.addEventListener("click", function(e){
     }
     // success
     else{
-        err == true ? message.classList.toggle("error") : "";
-        message.classList.toggle("success");
-        text.innerHTML = "Signin realized! you will be redirected now..."
-        err = false;
         setTimeout(function(){
             signinForm.submit();
         }, 3000);

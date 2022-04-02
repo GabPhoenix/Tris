@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.models.PacienteModel;
 import com.models.ProfissionalModel;
@@ -24,7 +26,7 @@ import com.repositories.ProfissionalDao;
 /**
  * Servlet implementation class AppServerlet
  */
-@WebServlet(urlPatterns =  { "/app", "/signin", "/login", "/create" })
+@WebServlet(urlPatterns =  { "/app", "/signin", "/login", "/create", "/list_patients"})
 public class AppServerlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PacienteDao pacienteDao = new PacienteDao();
@@ -32,7 +34,9 @@ public class AppServerlet extends HttpServlet {
     private PacienteModel paciente = new PacienteModel();
     private ProfissionalModel profissional = new ProfissionalModel();
     private UsuarioModel user = new UsuarioModel();
+    private List<PacienteModel> pac = new ArrayList<PacienteModel>();
     
+    private final String listPage = "/WEB-INF/listPatients.jsp";
     private final String loginPage = "login.html";
     
     /**
@@ -58,7 +62,7 @@ public class AppServerlet extends HttpServlet {
 			this.updatePatient(request, response);
 		} else if(action.equals("delete_patient")) {
 			this.deletePatient(request, response);
-		} else if(action.equals("list_patients")) {
+		} else if(action.equals("/list_patients")) {
 			this.listPatients(request, response);
 		}
 	}
@@ -128,7 +132,7 @@ public class AppServerlet extends HttpServlet {
 		
 		if(cad) {
 			System.out.println("Paciente cadastrado com sucesso!");
-			request.getRequestDispatcher("/WEB-INF/listPatients.html").forward(request, response);
+			this.listPatients(request, response);
 		} else {
 			System.out.println("Não foi possível cadastrar");
 			response.sendError(0, "Impossível cadastrar");
@@ -153,6 +157,8 @@ public class AppServerlet extends HttpServlet {
 	 * TODO LIST PATIENTS METHOD
 	 */
 	public void listPatients(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
+		ArrayList<PacienteModel> lista = pacienteDao.listarPacientes();
+		request.setAttribute("pacientes", lista);
+		request.getRequestDispatcher(listPage).forward(request, response);
 	}
 }

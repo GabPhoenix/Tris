@@ -25,10 +25,6 @@ btn.addEventListener("click", function(e){
     }
     // success
     else{
-        err == true ? message.classList.toggle("error") : "";
-        message.classList.toggle("success");
-        text.innerHTML = "Login realized! you will be redirected now..."
-        err = false;
         setTimeout(function(){
             loginForm.submit();
         }, 3000);

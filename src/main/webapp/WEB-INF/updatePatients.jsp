@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.ArrayList"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,7 +67,6 @@
 
         </footer>
     <!-- end footer section -->
-    	<a href="/Tris/list_patients">Listar pacientes</a>
     </main>
 </body>
 </html>

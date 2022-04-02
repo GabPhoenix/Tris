@@ -40,9 +40,9 @@ public class PacienteDao{
 	/*
 	 * LIST ALL PATIENTS AND RETURN A LIST
 	 */
-	public List<PacienteModel> listarPacientes(){
-		String sql = "select * from paciente;";
-		List<PacienteModel> result = new ArrayList<>();
+	public ArrayList<PacienteModel> listarPacientes(){
+		String sql = "select * from paciente order by Id;";
+		ArrayList<PacienteModel> result = new ArrayList<>();
 		try {
 			Connection con = connect();
 			PreparedStatement stm = con.prepareStatement(sql);
@@ -58,10 +58,12 @@ public class PacienteDao{
 				paciente.setDescricao(res.getString("Descricao"));
 				result.add(paciente);
 			}
+			con.close();
+			return result;
 		} catch(SQLException e) {
 			Logger.getLogger(PacienteDao.class.getName()).log(Level.SEVERE, null, e);
+			return null;
 		}
-		return result;
 	}
 
 	/*
