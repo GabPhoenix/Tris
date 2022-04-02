@@ -1,10 +1,14 @@
 package com.models;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class PacienteModel {
 	private int id;
-	private String cpf, nome, sus, nascimento, email, quadro, descricao;
+	private String cpf, nome, sus, email, quadro, descricao;
+	private LocalDate nascimento;
 
-	public PacienteModel(String cpf, String nome, String sus, String nascimento, String email, String quadro,
+	public PacienteModel(String cpf, String nome, String sus, LocalDate nascimento, String email, String quadro,
 			String descricao) {
 		this.cpf = cpf;
 		this.nome = nome;
@@ -51,13 +55,13 @@ public class PacienteModel {
 		this.sus = sus;
 	}
 
-	public String getNascimento() {
-		return nascimento;
-	}
-
-	public void setNascimento(String nascimento) {
-		this.nascimento = nascimento;
-	}
+//	public LocalDate getNascimento() {
+//		return nascimento;
+//	}
+//
+//	public void setNascimento(LocalDate data) {
+//		this.nascimento = data;
+//	}
 
 	public String getEmail() {
 		return email;

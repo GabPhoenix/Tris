@@ -4,13 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DAO {
-	private String driver = "org.postgresql.Driver";
-	private String url = "jdbc:postgresql://localhost:5432/Tris";
-	private String user = "postgres";
-	private String password = "1234";
+	private static String driver = "org.postgresql.Driver";
+	private static String url = "jdbc:postgresql://localhost:5432/Tris";
+	private static String user = "postgres";
+	private static String password = "1234";
 			
-	
-	public Connection conectar(){
+	public static Connection conectar(){
 		Connection con = null;
 		try {
 			Class.forName(driver);
