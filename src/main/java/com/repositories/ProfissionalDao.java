@@ -31,7 +31,7 @@ public class ProfissionalDao{
 			System.out.println("ProfisionalDAO Conectado com sucesso!");
 			return con;			
 			} catch (Exception e){
-			e.printStackTrace();
+				e.printStackTrace();
 			}
 		return null;
 			

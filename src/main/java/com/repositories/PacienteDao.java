@@ -94,18 +94,19 @@ public class PacienteDao{
 	 * UPDATE PATIENTS METHOD
 	 */
 	public boolean updatePaciente(PacienteModel paciente) {
-		String sql = "UPDATE paciente Where id = ? SET cpf_paciente = ?, nome = ?, sus = ?, email = ?, "
-				+ "quadro = ?, descricao = ?)";
+		
+		String sql = "UPDATE paciente SET cpf_paciente = ?, nome = ?, sus = ?, email = ?, "
+				+ "quadro = ?, descricao = ? Where id = ?";
 		try {
 			Connection con = connect();
-			PreparedStatement stm = con.prepareStatement(sql);
-			stm.setInt(1, paciente.getId());
-			stm.setString(2, paciente.getCpf());
-			stm.setString(3, paciente.getNome());
-			stm.setString(4, paciente.getSus());
-			stm.setString(5, paciente.getEmail());
-			stm.setString(6, paciente.getQuadro());
-			stm.setString(7, paciente.getDescricao());
+			PreparedStatement stm = con.prepareStatement(sql);		
+			stm.setString(1, paciente.getCpf());
+			stm.setString(2, paciente.getNome());
+			stm.setString(3, paciente.getSus());
+			stm.setString(4, paciente.getEmail());
+			stm.setString(5, paciente.getQuadro());
+			stm.setString(6, paciente.getDescricao());
+			stm.setInt(7, paciente.getId());
 			stm.execute();
 			return true;
 		} catch(Exception e) {
@@ -114,11 +115,43 @@ public class PacienteDao{
 		}	
 	}
 	
+	// GET PACIENTE BY ID
+	
+	public PacienteModel getPacienteById(int Id) {
+		
+		PacienteModel paciente = null;
+		
+		String sql = "SELECT * FROM Paciente WHERE id=?";
+		try {
+			Connection con = connect();
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setInt(1, Id);
+			ResultSet res = stm.executeQuery();
+			
+			while(res.next()) {				
+				paciente = new PacienteModel();		
+				paciente.setId(res.getInt("Id"));
+				paciente.setCpf(res.getString("Cpf_paciente"));
+				paciente.setNome(res.getString("Nome"));
+				paciente.setSus(res.getString("Sus"));
+				paciente.setEmail(res.getString("Email"));
+				paciente.setQuadro(res.getString("Quadro"));
+				paciente.setDescricao(res.getString("Descricao"));
+			}			
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+		}	
+		
+		return paciente;
+	}
+	
 	/*
 	 * REMOVE PATIENTS METHOD
 	 */
 	public boolean removePaciente(int id) {
-		String sql = "DELETE * FROM Paciente WHERE Id=?";
+		String sql = "DELETE FROM Paciente WHERE Id=?";
 		try {
 			Connection con = connect();
 			PreparedStatement stm = con.prepareStatement(sql);

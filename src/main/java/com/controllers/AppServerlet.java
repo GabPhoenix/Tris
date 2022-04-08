@@ -1,32 +1,30 @@
 package com.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import java.sql.Connection;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import org.postgresql.util.PSQLException;
 
 import com.models.PacienteModel;
 import com.models.ProfissionalModel;
+import com.models.UserLoged;
 import com.models.UsuarioModel;
-import com.repositories.Conexao;
 import com.repositories.PacienteDao;
 import com.repositories.ProfissionalDao;
 
 /**
  * Servlet implementation class AppServerlet
  */
-@WebServlet(urlPatterns =  { "/app", "/signin", "/login", "/create", "/list_patients"})
+@WebServlet(urlPatterns =  { "/app", "/signin", "/login", "/create", "/list_patients", "/update_patient", "/delete_patient", "/logout"})
+
 public class AppServerlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PacienteDao pacienteDao = new PacienteDao();
@@ -34,7 +32,7 @@ public class AppServerlet extends HttpServlet {
     private PacienteModel paciente = new PacienteModel();
     private ProfissionalModel profissional = new ProfissionalModel();
     private UsuarioModel user = new UsuarioModel();
-    private List<PacienteModel> pac = new ArrayList<PacienteModel>();
+    private List<PacienteModel> pacientes = new ArrayList<PacienteModel>();
     
     private final String listPage = "/WEB-INF/listPatients.jsp";
     private final String loginPage = "login.html";
@@ -52,18 +50,24 @@ public class AppServerlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getServletPath();
+		
 		if(action.equals("/signin")) {
 			this.signin(request, response);
 		} else if(action.equals("/login")) {
 			this.login(request, response);
 		} else if(action.equals("/create")) {
-			this.createNewPatiente(request, response);
-		} else if(action.equals("update_patient")) {
+			this.createNewPatient(request, response);
+		} else if(action.equals("/update_patient")) {
 			this.updatePatient(request, response);
-		} else if(action.equals("delete_patient")) {
+		} else if(action.equals("/delete_patient")) {
 			this.deletePatient(request, response);
-		} else if(action.equals("/list_patients")) {
+		}else if(action.equals("/list_patients")) {
 			this.listPatients(request, response);
+		}else if(action.equals("/logout")) {
+			HttpSession session = request.getSession();
+			session.removeAttribute("isloged");	
+			System.out.println("the session ends");
+			response.sendRedirect(loginPage);
 		}
 	}
 
@@ -80,6 +84,7 @@ public class AppServerlet extends HttpServlet {
 	 * AND AFTER REDIRECT THEM TO LOGIN PAGE 
 	 */
 	protected void signin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		profissional.setCpf(request.getParameter("cpf"));
 		profissional.setNome(request.getParameter("realname"));
 		profissional.setLogin(request.getParameter("username"));
@@ -87,11 +92,12 @@ public class AppServerlet extends HttpServlet {
 		profissional.setGrupo(request.getParameter("group"));
 
 		boolean sign = profissionalDao.insertProfissional(profissional);
+		
 		if(sign) {
 			System.out.println("Cadastrado");
 			response.sendRedirect(loginPage);
 		} else {
-			System.out.println("Não cadastrado");
+			System.out.println("Não foi cadastrado");
 			response.sendRedirect("signin.html");
 		}
 	
@@ -105,13 +111,20 @@ public class AppServerlet extends HttpServlet {
 	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		user.setLogin(request.getParameter("username"));
 		user.setSenha(request.getParameter("password"));
-		
+		UserLoged userlg = new UserLoged();
 		boolean log = profissionalDao.login(user);
+		
 		if(log) {
-			System.out.println("Logado");
+			userlg.setUsername(request.getParameter("username"));
+			userlg.setPassword(request.getParameter("password"));
+			
+			HttpServletRequest req = (HttpServletRequest) request;
+			HttpSession session = req.getSession();
+			session.setAttribute("isloged", userlg);
+			
+			System.out.println("Loged as: "+ userlg.getUsername());
 			request.getRequestDispatcher("/WEB-INF/newPatient.html").forward(request, response);
 		} else {
-			System.out.println("Não logado");
 			response.sendRedirect(loginPage);
 		}
 		
@@ -121,21 +134,26 @@ public class AppServerlet extends HttpServlet {
 	 * THIS METHOD IS TO CREATE NEW PATIENT AND AFTER 
 	 * REDIRECT TO 'LIST PATIENTS PAGE'
 	 */
-	protected void createNewPatiente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void createNewPatient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		paciente.setCpf(request.getParameter("cpf"));
 		paciente.setNome(request.getParameter("nome"));
 		paciente.setSus(request.getParameter("sus"));
 		paciente.setEmail(request.getParameter("email"));
-		paciente.setQuadro(request.getParameter("triage"));
-		paciente.setDescricao(request.getParameter("descrição"));
-		boolean cad = pacienteDao.insertPaciente(paciente);
+		paciente.setQuadro(request.getParameter("triagem"));
+		paciente.setDescricao(request.getParameter("descricao"));
 		
-		if(cad) {
-			System.out.println("Paciente cadastrado com sucesso!");
-			this.listPatients(request, response);
-		} else {
-			System.out.println("Não foi possível cadastrar");
-			response.sendError(0, "Impossível cadastrar");
+		if(paciente.getCpf()!= null && paciente.getNome()!=null) {
+			try {
+				boolean cad = pacienteDao.insertPaciente(paciente);
+				if(cad) {
+					System.out.println("Paciente cadastrado com sucesso!");
+					response.sendRedirect("http://localhost:8080/Tris/list_patients");
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			request.getRequestDispatcher("/WEB-INF/newPatient.html").forward(request, response);
 		}
 	}
 	
@@ -144,13 +162,42 @@ public class AppServerlet extends HttpServlet {
 	 */
 	public void updatePatient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
+		paciente.setId(Integer.parseInt((request.getParameter("id"))));
+		paciente.setCpf(request.getParameter("cpf"));
+		paciente.setNome(request.getParameter("nome"));
+		paciente.setSus(request.getParameter("sus"));
+		paciente.setEmail(request.getParameter("email"));
+		paciente.setQuadro(request.getParameter("triagem"));
+		paciente.setDescricao(request.getParameter("descricao"));
+		boolean update = pacienteDao.updatePaciente(paciente);
+		
+		if(update) {
+			System.out.println("Paciente atualizado com sucesso!");
+			response.sendRedirect("http://localhost:8080/Tris/list_patients");
+		} else {
+			System.out.println("N�o foi poss�vel fazer a atualiza��o");
+			response.sendError(0, "Impossivel atualizar");
+		}
+			
+			
 	}
 	
 	/*
 	 * TODO DELETE PATIENT METHOD
 	 */
 	public void deletePatient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	
+		int id = Integer.parseInt((request.getParameter("id")));
 		
+		boolean remove = pacienteDao.removePaciente(id);
+		
+		if(remove) {
+			System.out.println("Paciente removido com sucesso!");
+			response.sendRedirect("http://localhost:8080/Tris/list_patients");
+		} else {
+			System.out.println("N�o foi poss�vel remover o paciente");
+			response.sendError(0, "Impossivel remover");
+		}
 	}
 
 	/*
@@ -158,7 +205,34 @@ public class AppServerlet extends HttpServlet {
 	 */
 	public void listPatients(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		ArrayList<PacienteModel> lista = pacienteDao.listarPacientes();
-		request.setAttribute("pacientes", lista);
-		request.getRequestDispatcher(listPage).forward(request, response);
+
+		if(request.getParameter("action")!=null) {
+			
+			PacienteModel pacienteExiste = pacienteDao.getPacienteById(Integer.parseInt((request.getParameter("id"))));
+			
+			 if(request.getParameter("action").equalsIgnoreCase("update_patient")) {
+									
+					if(pacienteExiste!=null) {		 
+						request.setAttribute("paciente", pacienteExiste);
+						request.getRequestDispatcher("/WEB-INF/updatePatients.jsp").forward(request, response);			
+					} else {
+						response.sendError(0, "Usuario n�o encontrado");
+					}
+					
+			 }else if(request.getParameter("action").equalsIgnoreCase("delete_patient")) {
+				 
+				 if(pacienteExiste!=null) {		 
+					 this.deletePatient(request, response);				
+					} else {
+						response.sendError(0, "Usuario n�o encontrado");
+					}
+			 }
+	
+		} else{
+			 request.setAttribute("pacientes", lista);
+		     request.getRequestDispatcher(listPage).forward(request, response);
+		 }
+		
+		
 	}
 }
