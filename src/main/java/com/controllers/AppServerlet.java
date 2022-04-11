@@ -6,12 +6,11 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.postgresql.util.PSQLException;
 
 import com.models.PacienteModel;
 import com.models.ProfissionalModel;
@@ -122,6 +121,18 @@ public class AppServerlet extends HttpServlet {
 			HttpSession session = req.getSession();
 			session.setAttribute("isloged", userlg);
 			
+			if(req.getAttribute("isloged")!=null) {
+				Cookie cookie = new Cookie("sessaoCriada", session.getId());
+				cookie.setMaxAge(60*60);
+			}
+			
+			Cookie[] cookies = req.getCookies();
+			for(Cookie cookie: cookies) {
+				if(cookie.getName().equals("sessaoCriada")) {
+					req.setAttribute("isloged", cookie.getValue());
+				}
+			} 
+			
 			System.out.println("Loged as: "+ userlg.getUsername());
 			request.getRequestDispatcher("/WEB-INF/newPatient.html").forward(request, response);
 		} else {
@@ -142,18 +153,22 @@ public class AppServerlet extends HttpServlet {
 		paciente.setQuadro(request.getParameter("triagem"));
 		paciente.setDescricao(request.getParameter("descricao"));
 		
-		if(paciente.getCpf()!= null && paciente.getNome()!=null) {
-			try {
-				boolean cad = pacienteDao.insertPaciente(paciente);
-				if(cad) {
-					System.out.println("Paciente cadastrado com sucesso!");
-					response.sendRedirect("http://localhost:8080/Tris/list_patients");
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpSession session = req.getSession();
+		if(session.getAttribute("isloged") != null) {
+			if(paciente.getCpf()!= null && paciente.getNome()!=null) {
+				try {
+					boolean cad = pacienteDao.insertPaciente(paciente);
+					if(cad) {
+						System.out.println("Paciente cadastrado com sucesso!");
+						response.sendRedirect("http://localhost:8080/Tris/list_patients");
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
 				}
-			}catch(Exception e) {
-				e.printStackTrace();
+			}else {
+				request.getRequestDispatcher("/WEB-INF/newPatient.html").forward(request, response);
 			}
-		}else {
-			request.getRequestDispatcher("/WEB-INF/newPatient.html").forward(request, response);
 		}
 	}
 	
