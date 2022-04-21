@@ -12,13 +12,9 @@
     <a href="https://github.com/Clary04/">Clarissa Vanderley</a>
 </div>
 
-<div align="center">
-    <h2>Video</h2>
-  <div align="center">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/GdXnat4eKp8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  </div>
-</div>
-
+## video
+ 
+https://user-images.githubusercontent.com/80786139/164506013-bf21aef9-7004-44a0-a90e-c726280070ca.mp4
 
 <div align="center">
     <h2>Screenshots</h2>
